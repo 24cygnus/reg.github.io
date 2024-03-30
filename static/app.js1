@@ -1,0 +1,27 @@
+function calculateTotal(formData) {
+    let totalAmount = 0;
+
+    // Calculate total amount based on the form data
+    // Each event costs Rs. 250 except for food feast which costs Rs. 50
+    const events = ['clash_of_minds', 'brain_buster', 'circuit_debugging', 'paper_presentation', 'hall_of_war', 'show_your_talent', 'singing', 'dance', 'photography', 'silambam'];
+    for (const event of events) {
+        if (formData.get(event)) {
+            totalAmount += (event === 'food_feast') ? 50 : 250;
+        }
+    }
+
+    return totalAmount;
+}
+
+async function generateQR() {
+    const formData = new FormData(document.getElementById('registrationForm'));
+    const totalAmount = calculateTotal(formData);
+    const qrCode = document.getElementById('qrCode');
+    const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const totalAmountContainer = document.getElementById('totalAmount');
+    const qrData = `upi://pay?pa=magesh17032003@oksbi&pn=Mageshkumar K&am=${totalAmount}&cu=INR&aid=uGICAgMCy_PLaYw`;
+
+    qrCodeContainer.style.display = 'block';
+    qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}`;
+    totalAmountContainer.textContent = `Total Amount Payable: Rs. ${totalAmount}`;
+}
