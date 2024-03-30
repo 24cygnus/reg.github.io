@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Registration</title>
+<!-- Add your CSS styles here -->
+<style>
+    /* Add your CSS styles here */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    
+    .container {
+        max-width: 600px;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    
+    h2 {
+        color: #007bff;
+        margin-bottom: 30px;
+    }
+    
+    form {
+        text-align: left;
+    }
+    
+    label {
+        font-weight: bold;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select,
+    button[type="submit"],
+    input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    
+    button[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    
+    #qrCodeContainer {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    #qrCode {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .paymentLink {
+        margin-bottom: 20px;
+    }
+    
+    .paymentButton {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .paymentButton:hover {
+        background-color: #0056b3;
+    }
+    
+    #teamDetails8_8 {
+        display: none;
+    }
+    
+    #confirmParticipantsButton {
+        margin-left: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    #confirmParticipantsButton:hover {
+        background-color: #0056b3;
+    }
+    
+    .memberDetails {
+        display: none;
+    }
+    
+    .memberDetails.active {
+        display: block;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Cygnus Registration Form</h2>
+    <!-- Your registration form code here -->
+    <form id="registrationForm" method="post" action="/submit" enctype="multipart/form-data">
+
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+        
+        <label for="college">College:</label>
+        <input type="text" id="college" name="college" required>
+        
+        <label for="collegeId">College ID (Registration/Roll Number):</label>
+        <input type="text" id="collegeId" name="collegeId" required>
+        
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department" required>
+
+        <!-- Your form inputs remain unchanged -->
+
+        
+        <label for="events">Choose Events:</label><br>
+        <label for="events">Technical Events:</label><br>
+        <input type="checkbox" id="Brain Buster" class="eventCheckbox" name="events[]" value="Brain Buster"> Brain Buster <br>
+        <input type="checkbox" id="Circuit Debugging" class="eventCheckbox" name="events[]" value="Circuit Debugging"> Circuit Debugging (Team of 3)<br>
+        <input type="checkbox" id="Clash of minds" class="eventCheckbox" name="events[]" value="Clash of minds"> Clash of minds (Team of 3)<br>
+        <input type="checkbox" id="project expo" class="eventCheckbox" name="events[]" value="project expo"> project expo (Maximum 3 participant per team)<br>
+        <input type="checkbox" id="Food Feast" class="eventCheckbox" name="events[]" value="Food Feast"> Food Feast (3 participant per team)<br>
+        <input type="checkbox" id="HallOfWar" class="eventCheckbox" name="events[]" value="Hall Of War"> Hall of War<br>
+        <input type="checkbox" id="Photography" class="eventCheckbox" name="events[]" value="Photography"> Photography<br>
+        <input type="checkbox" id="Dance" class="eventCheckbox" name="events[]" value="Dance"> Dance<br>
+        <input type="checkbox" id="Singing" class="eventCheckbox" name="events[]" value="Singing"> Singing<br>
+        <input type="checkbox" id="Silambam" class="eventCheckbox" name="events[]" value="Silambam"> Silambam<br>
+
+
+        <div id="totalAmount"></div>
+        <button type="button" id="fetchAmountButton" class="paymentButton" onclick="fetchAmount()">Fetch Amount</button>
+
+        <div id="qrCodeContainer" style="display: none;">
+            <label for="qrCode">QR Code for Payment:</label><br>
+            <img id="qrCode" src="" alt="QR Code">
+        </div>
+        <button type="button" id="upiPaymentButton" class="paymentButton" onclick="proceedToPayment()">Proceed to Payment</button>
+
+        <label for="upiId">Your UPI ID:</label>
+        <input type="text" id="upiId" name="upiId" required>
+        
+        <label for="transactionNumber">Transaction Number:</label>
+        <input type="text" id="transactionNumber" name="transactionNumber" required>
+
+        <button type="submit">Submit</button>
+
+    </form>
+</div>
+
+<script>
+const checkboxes = document.querySelectorAll('.eventCheckbox');
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        fetchAmount();
+    });
+});
+
+async function fetchAmount() {
+    generateQR();
+}
+
+async function generateQR() {
+    const formData = new FormData(document.getElementById('registrationForm'));
+    const totalAmount = calculateTotal(formData);
+    const qrCode = document.getElementById('qrCode');
+    const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const totalAmountContainer = document.getElementById('totalAmount');
+    const qrData = `upi://pay?pa=magesh17032003@oksbi&pn=Mageshkumar%20K&am=${totalAmount}&cu=INR&aid=uGICAgMCy_PLaYw`;
+
+    qrCodeContainer.style.display = 'block';
+    qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}&size=150x150&margin=0`;
+    totalAmountContainer.textContent = `Total Amount Payable: Rs. ${totalAmount}`;
+}
+
+function proceedToPayment() {
+    const upiId = document.getElementById('upiId').value;
+    const totalAmount = document.getElementById('totalAmount').textContent.replace('Total Amount Payable: Rs. ', '');
+    const transactionNumber = document.getElementById('transactionNumber').value;
+    const paymentLink = `upi://pay?pa=magesh17032003@oksbi&pn=Mageshkumar%20K&am=${totalAmount}&cu=INR&tid=${transactionNumber}&aid=uGICAgMCy_PLaYw`;
+    window.location.href = paymentLink;
+}
+
+function calculateTotal(formData) {
+    let total = 0;
+    if (formData.has('events[]')) {
+        const events = formData.getAll('events[]');
+        if (events.includes("Food Feast")) {
+            total = 250; // If Food Feast is included, fixed amount is Rs. 250
+        } else {
+            total = 50; // Otherwise, fixed amount is Rs. 50
+        }
+    }
+    return total;
+}
+</script>
+</body>
+</html>
+
