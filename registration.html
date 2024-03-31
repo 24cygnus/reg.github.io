@@ -268,6 +268,32 @@ function calculateTotal(formData) {
     return total;
 }
 
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+        
+        if (validateForm()) {
+            redirectToThankYouPage();
+        } else {
+            alert('Please fill in all required fields.');
+        }
+    });
+});
+
+function validateForm() {
+    const requiredFields = document.querySelectorAll('[required]');
+    let isValid = true;
+    
+    requiredFields.forEach(field => {
+        if (field.value.trim() === '') {
+            isValid = false;
+        }
+    });
+    
+    return isValid;
+}
+
 function redirectToThankYouPage() {
     window.location.href = "thank_you_page.html";
 }
