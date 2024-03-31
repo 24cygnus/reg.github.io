@@ -136,7 +136,7 @@
 <body>
 <div class="container">
     <h2>Cygnus Registration Form</h2>
-    <form id="registrationForm" method="post" action="https://script.google.com/macros/s/AKfycbyzfTXHORfaU_Vmds22-639vHO9audaBv61aAuFVTPfL74GyavyKDbUWJHUQT-HV3vL2g/exec">
+    <form id="registrationForm" method="post" action="https://script.google.com/macros/s/AKfycbz6SnOayKx9B12-BUGCRdnFs8nrE1v6h191x8KIuh9Tn2nTca7OSp5eYGCxUJCfpJ74qQ/exec">
 
         <label for="fullName">Full Name:</label>
         <input type="text" id="fullName" name="fullName" required>
@@ -216,7 +216,8 @@
         <label for="transactionNumber">Transaction Number:</label>
         <input type="text" id="transactionNumber" name="transactionNumber" required>
     
-        <button type="submit" onclick="redirectToThankYouPage()">Submit</button>
+        
+        <button type="submit">Submit</button>
     
     </form>
     
@@ -294,9 +295,38 @@ function validateForm() {
     return isValid;
 }
 
-function redirectToThankYouPage() {
-    window.location.href = "thank_you_page.html";
-}
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Serialize form data
+            var formData = new FormData(this);
+            
+            // Send form data to the server
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(data => {
+                // Check if the response is 'Success'
+                if (data === 'Success') {
+                    // Redirect to the next page
+                    window.location.href = "thank_you_page.html";
+                } else {
+                    throw new Error('Unexpected response from server.');
+                }
+            })
+            .catch(error => {
+                console.error('There was an error submitting the form:', error);
+                // Handle error condition here, e.g., display error message to user
+            });
+        });
 </script>
 </body>
 </html>
