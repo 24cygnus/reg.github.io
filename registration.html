@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYGNUS EVENT REGISTRATION FORM</title>
+    <style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url(img/be.png);
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover; /* Set background image to cover the entire background */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-position: center; /* Center the background image */
+}
+
+
+.container {
+    max-width: 600px;
+    background-color: transparent;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 
+        0 0 0 5px rgba(13, 225, 222, 0.684), /* Outer shadow */
+        0 4px 8px rgba(251, 250, 250, 0.94); /* Inner shadow */
+    text-align: center;
+    backdrop-filter: blur(10px); /* Apply a blur effect to the background */
+}
+
+        h2 {
+            margin-bottom: 30px;
+            color: aqua;
+           -webkit-text-stroke: 1px;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            color: #ffffff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select,
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #qrCodeContainer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #qrCode {
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .paymentLink {
+            margin-bottom: 20px;
+        }
+
+        .paymentButton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .paymentButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cygnus Registration Form</h2>
+        <form id="registrationForm">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+            
+            <label for="college">College:</label>
+            <input type="text" id="college" name="college" required>
+            
+            <label for="collegeId">College ID (Registration/Roll Number):</label>
+            <input type="text" id="collegeId" name="collegeId" required>
+            
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department" required>
+            
+            <label for="events">Choose Events:</label><br>
+            <input type="checkbox" id="event1.1" class="eventCheckbox" name="events[]" value="Event 1.1"> Event 1.1 (Rs. 100)<br>
+            <input type="checkbox" id="event2.2" class="eventCheckbox" name="events[]" value="Event 2.2"> Event 2.2 (Rs. 100)<br>
+            <input type="checkbox" id="event3.3" class="eventCheckbox" name="events[]" value="Event 3.3"> Event 3.3 (Rs. 100)<br>
+            <input type="checkbox" id="event4.4" class="eventCheckbox" name="events[]" value="Event 4.4"> Event 4.4 (Rs. 100)<br>
+            <input type="checkbox" id="event5.5" class="eventCheckbox" name="events[]" value="Event 5.5"> Event 5.5 (Rs. 100)<br>
+            <input type="checkbox" id="event6.6" class="eventCheckbox" name="events[]" value="Event 6.6"> Event 6.6 (Rs. 100)<br>
+            <input type="checkbox" id="event7.7" class="eventCheckbox" name="events[]" value="Event 7.7"> Event 7.7 (Rs. 100)<br>
+            <input type="checkbox" id="event8.8" class="eventCheckbox" name="events[]" value="Event 8.8"> Event 8.8 (Rs. 100)<br>
+            <input type="checkbox" id="event9.9" class="eventCheckbox" name="events[]" value="Event 9.9"> Event 9.9 (Rs. 60)<br>
+            <input type="checkbox" id="event10.0" class="eventCheckbox" name="events[]" value="Event 10.0"> Event 10.0 (Rs. 180)<br>
+            <span>or</span><br>
+            <input type="checkbox" id="comboPack" name="comboPack" value="Combo Pack"> Combo Pack (All Events - Rs. 300)<br>
+            
+            <!-- Your form inputs here -->
+
+            <!-- Button for UPI Payment -->
+            <button type="button" id="upiPaymentButton" class="paymentButton">Redirect to UPI payment</button>
+
+            <div id="qrCodeContainer" style="display: none;">
+                <label for="qrCode">QR Code for Payment:</label><br>
+                <img id="qrCode" src="" alt="QR Code">
+                
+            </div>
+
+            <label for="upiId">Your UPI ID:</label>
+            <input type="text" id="upiId" name="upiId" required>
+            
+            <label for="transactionNumber">Transaction Number:</label>
+            <input type="text" id="transactionNumber" name="transactionNumber" required>
+
+            <!-- Remaining form inputs -->
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+
+        const checkboxes = document.querySelectorAll('.eventCheckbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                generateQR();
+            });
+        });
+
+        async function generateQR() {
+            const formData = new FormData(document.getElementById('registrationForm'));
+            const totalAmount = calculateTotal(formData);
+            const upiId = document.getElementById('upiId').value;
+            const transactionNumber = document.getElementById('transactionNumber').value;
+            const qrCode = document.getElementById('qrCode');
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+            const paymentLink = document.getElementById('paymentLink');
+            const qrData = `upi://pay?pa=magesh17032003@oksbi&pn=Mageshkumar%20K&am=${totalAmount}&cu=INR&aid=uGICAgMCy_PLaYw`;
+            
+            qrCodeContainer.style.display = 'block';
+            qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrData)}`;
+            paymentButton.textContent = "Pay Now";
+            paymentButton.href = qrData;
+        }
+
+        function calculateTotal(formData) {
+            let total = 0;
+            if (formData.has('events[]')) {
+                const events = formData.getAll('events[]');
+                events.forEach(event => {
+                    if (event === "Event 9.9") {
+                        total += 60;
+                    } else if (event === "Event 10.0") {
+                        total += 180;
+                    } else {
+                        total += 100;
+                    }
+                });
+            }
+            if (formData.has('comboPack')) {
+                total += 300;
+            }
+            return total.toFixed(2); // Round to 2 decimal places
+        }
+
+        document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwzvnN-fgD0Q7Qp7V0G34XvFesFhFZueCI7DEes7wvP-BgblkTMMYNjm-nI1MR5f_qG-w/exec', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                alert(data.message);
+                this.reset();
+                window.location.href = "success.html"; // Redirect to success page
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+        // JavaScript code remains unchanged
+    </script>
+</body>
+</html>
