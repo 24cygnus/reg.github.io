@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Event Registration</title>
-<!-- Add your CSS styles here -->
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Registration</title>
+
+  <!-- Add your CSS styles here -->
+  <style>
     /* Add your CSS styles here */
     body {
         font-family: Arial, sans-serif;
@@ -125,13 +126,17 @@
     .memberDetails.active {
         display: block;
     }
-    </style>
+    /* Add this CSS to style the total amount text */
+    #totalAmount {
+    color: red; 
+    margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
     <h2>Cygnus Registration Form</h2>
-    <!-- Your registration form code here -->
-    <form id="registrationForm" method="post" action="/submit" enctype="multipart/form-data">
+    <form id="registrationForm" method="post" action="https://script.google.com/macros/s/AKfycbyzfTXHORfaU_Vmds22-639vHO9audaBv61aAuFVTPfL74GyavyKDbUWJHUQT-HV3vL2g/exec">
 
         <label for="fullName">Full Name:</label>
         <input type="text" id="fullName" name="fullName" required>
@@ -150,42 +155,68 @@
         
         <label for="department">Department:</label>
         <input type="text" id="department" name="department" required>
-
-        <!-- Your form inputs remain unchanged -->
-
-        
-        <label for="events">Choose Events:</label><br>
-        <label for="events">Technical Events:</label><br>
-        <input type="checkbox" id="Brain Buster" class="eventCheckbox" name="events[]" value="Brain Buster"> Brain Buster <br>
-        <input type="checkbox" id="Circuit Debugging" class="eventCheckbox" name="events[]" value="Circuit Debugging"> Circuit Debugging (Team of 3)<br>
-        <input type="checkbox" id="Clash of minds" class="eventCheckbox" name="events[]" value="Clash of minds"> Clash of minds (Team of 3)<br>
-        <input type="checkbox" id="project expo" class="eventCheckbox" name="events[]" value="project expo"> project expo (Maximum 3 participant per team)<br>
-        <input type="checkbox" id="Food Feast" class="eventCheckbox" name="events[]" value="Food Feast"> Food Feast (3 participant per team)<br>
-        <input type="checkbox" id="HallOfWar" class="eventCheckbox" name="events[]" value="Hall Of War"> Hall of War<br>
-        <input type="checkbox" id="Photography" class="eventCheckbox" name="events[]" value="Photography"> Photography<br>
-        <input type="checkbox" id="Dance" class="eventCheckbox" name="events[]" value="Dance"> Dance<br>
-        <input type="checkbox" id="Singing" class="eventCheckbox" name="events[]" value="Singing"> Singing<br>
-        <input type="checkbox" id="Silambam" class="eventCheckbox" name="events[]" value="Silambam"> Silambam<br>
-
-
-        <div id="totalAmount"></div>
+    
+        <label>Select events you are willing to participate in:</label>
+        <label for="brain_buster">
+            <input type="checkbox" id="brain_buster" name="events[]" value="brain_buster">
+            Brain Buster
+        </label>
+        <label for="clash_of_minds">
+            <input type="checkbox" id="clash_of_minds" name="events[]" value="clash_of_minds">
+            Clash of Minds
+        </label>
+        <label for="circuit_debugging">
+            <input type="checkbox" id="circuit_debugging" name="events[]" value="circuit_debugging">
+            Circuit Debugging
+        </label>
+        <label for="project_expo">
+            <input type="checkbox" id="project_expo" name="events[]" value="project_expo">
+            Project Expo
+        </label>
+        <label for="hall_of_war">
+            <input type="checkbox" id="hall_of_war" name="events[]" value="hall_of_war">
+            Hall of War
+        </label>
+        <label for="food_feast">
+            <input type="checkbox" id="food_feast" name="events[]" value="food_feast">
+            Food Feast
+        </label>
+        <label for="photography">
+            <input type="checkbox" id="photography" name="events[]" value="photography">
+            Photography
+        </label>
+        <label for="singing">
+            <input type="checkbox" id="singing" name="events[]" value="singing">
+            Singing
+        </label>
+        <label for="dance">
+            <input type="checkbox" id="dance" name="events[]" value="dance">
+            Dance
+        </label>
+        <label for="silambam">
+            <input type="checkbox" id="silambam" name="events[]" value="silambam">
+            Silambam
+        </label>
+    
+        <div id="totalAmount" style="color: red;">Total Amount Payable: <span id="amountText" style="font-weight: bold;">Rs.</span> 0</div>
         <button type="button" id="fetchAmountButton" class="paymentButton" onclick="fetchAmount()">Fetch Amount</button>
-
+    
         <div id="qrCodeContainer" style="display: none;">
             <label for="qrCode">QR Code for Payment:</label><br>
             <img id="qrCode" src="" alt="QR Code">
         </div>
         <button type="button" id="upiPaymentButton" class="paymentButton" onclick="proceedToPayment()">Proceed to Payment</button>
-
+    
         <label for="upiId">Your UPI ID:</label>
         <input type="text" id="upiId" name="upiId" required>
         
         <label for="transactionNumber">Transaction Number:</label>
         <input type="text" id="transactionNumber" name="transactionNumber" required>
-
-        <button type="submit">Submit</button>
-
+    
+        <button type="submit" onclick="redirectToThankYouPage()">Submit</button>
+    
     </form>
+    
 </div>
 
 <script>
@@ -225,7 +256,7 @@ function calculateTotal(formData) {
     let total = 0;
     if (formData.has('events[]')) {
         const events = formData.getAll('events[]');
-        if (events.includes("Food Feast")) {
+        if (events.includes("food_feast")) {
             total = 250; // If Food Feast is included, fixed amount is Rs. 250
         } else {
             total = 50; // Otherwise, fixed amount is Rs. 50
@@ -233,7 +264,10 @@ function calculateTotal(formData) {
     }
     return total;
 }
+
+function redirectToThankYouPage() {
+    window.location.href = "thank_you_page.html";
+}
 </script>
 </body>
 </html>
-
